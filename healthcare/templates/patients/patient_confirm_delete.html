@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Patient - Healthcare System{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-12">
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <div class="text-center mb-6">
+            <div class="inline-block bg-red-100 rounded-full p-4 mb-4">
+                <i class="fas fa-exclamation-triangle text-3xl text-red-600"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800">Delete Patient?</h1>
+        </div>
+
+        <p class="text-gray-600 text-center mb-6">
+            Are you sure you want to delete <strong>{{ object.full_name }}</strong>? This action cannot be undone.
+        </p>
+
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            <div class="flex gap-3">
+                <button type="submit" class="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition">
+                    <i class="fas fa-trash mr-2"></i>Delete
+                </button>
+                <a href="{% url 'patient-detail' object.id %}" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-400 transition text-center">
+                    <i class="fas fa-times mr-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+
+        <p class="text-gray-500 text-xs text-center mt-4">
+            All related data will be affected by this deletion.
+        </p>
+    </div>
+</div>
+{% endblock %}

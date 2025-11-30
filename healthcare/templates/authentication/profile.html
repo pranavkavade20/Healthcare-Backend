@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - Healthcare{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">My Profile</h1>
+            <p class="text-gray-600">View and manage your account information</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-8">
+                <div class="flex items-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-blue-500 text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h2 class="text-2xl font-bold text-white">{{ request.user.name }}</h2>
+                        <p class="text-blue-100">{{ request.user.email }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Information -->
+            <div class="px-6 py-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Left Column -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6">Account Information</h3>
+                        
+                        <div class="space-y-5">
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Full Name</label>
+                                <p class="text-gray-900 font-medium">{{ request.user.name }}</p>
+                            </div>
+                            
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Email Address</label>
+                                <p class="text-gray-900 font-medium">{{ request.user.email }}</p>
+                            </div>
+                            
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Username</label>
+                                <p class="text-gray-900 font-medium">{{ request.user.username }}</p>
+                            </div>
+                            
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Account Status</label>
+                                <div class="mt-2">
+                                    {% if request.user.is_active %}
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            <span class="w-2 h-2 mr-2 bg-green-600 rounded-full"></span>
+                                            Active
+                                        </span>
+                                    {% else %}
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                                            <span class="w-2 h-2 mr-2 bg-red-600 rounded-full"></span>
+                                            Inactive
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6">Account Statistics</h3>
+                        
+                        <div class="space-y-5">
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Member Since</label>
+                                <p class="text-gray-900 font-medium">{{ request.user.date_joined|date:"M d, Y" }}</p>
+                            </div>
+                            
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Last Login</label>
+                                <p class="text-gray-900 font-medium">
+                                    {% if request.user.last_login %}
+                                        {{ request.user.last_login|date:"M d, Y H:i" }}
+                                    {% else %}
+                                        Never
+                                    {% endif %}
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <label class="text-sm font-medium text-gray-500">Account Type</label>
+                                <p class="text-gray-900 font-medium">
+                                    {% if request.user.is_staff %}
+                                        Administrator
+                                    {% elif request.user.is_superuser %}
+                                        Superuser
+                                    {% else %}
+                                        Regular User
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <a href="{% url 'settings' %}" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center transition duration-200">
+                <i class="fas fa-cog mr-2"></i>
+                Account Settings
+            </a>
+            <a href="{% url 'logout' %}" class="bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center transition duration-200">
+                <i class="fas fa-sign-out-alt mr-2"></i>
+                Logout
+            </a>
+        </div>
+
+        <!-- Back Link -->
+        <div>
+            <a href="{% url 'dashboard' %}" class="text-blue-500 hover:text-blue-600 font-medium flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

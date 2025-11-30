@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Edit Doctor{% else %}Add Doctor{% endif %} - Healthcare System{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">
+        {% if object %}Edit Doctor{% else %}Add New Doctor{% endif %}
+    </h1>
+    <p class="text-gray-600">{% if object %}Update doctor information{% else %}Add a new doctor to the system{% endif %}</p>
+</div>
+
+<div class="max-w-4xl">
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <form method="POST" class="space-y-6" novalidate>
+            {% csrf_token %}
+
+            <!-- Personal Information -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-user text-green-600 mr-2"></i>Personal Information
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                        <input type="text" name="first_name" value="{{ object.first_name }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                        <input type="text" name="last_name" value="{{ object.last_name }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth *</label>
+                        <input type="date" name="date_of_birth" value="{{ object.date_of_birth }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Gender *</label>
+                        <select name="gender" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                            <option value="">Select Gender</option>
+                            <option value="M" {% if object.gender == 'M' %}selected{% endif %}>Male</option>
+                            <option value="F" {% if object.gender == 'F' %}selected{% endif %}>Female</option>
+                            <option value="O" {% if object.gender == 'O' %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Information -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-stethoscope text-green-600 mr-2"></i>Professional Information
+                </h2>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Specialization *</label>
+                        <select name="specialization" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                            <option value="">Select Specialization</option>
+                            <option value="CARDIOLOGY" {% if object.specialization == 'CARDIOLOGY' %}selected{% endif %}>Cardiology</option>
+                            <option value="DERMATOLOGY" {% if object.specialization == 'DERMATOLOGY' %}selected{% endif %}>Dermatology</option>
+                            <option value="ENDOCRINOLOGY" {% if object.specialization == 'ENDOCRINOLOGY' %}selected{% endif %}>Endocrinology</option>
+                            <option value="GASTROENTEROLOGY" {% if object.specialization == 'GASTROENTEROLOGY' %}selected{% endif %}>Gastroenterology</option>
+                            <option value="GENERAL_PRACTICE" {% if object.specialization == 'GENERAL_PRACTICE' %}selected{% endif %}>General Practice</option>
+                            <option value="GYNECOLOGY" {% if object.specialization == 'GYNECOLOGY' %}selected{% endif %}>Gynecology</option>
+                            <option value="NEUROLOGY" {% if object.specialization == 'NEUROLOGY' %}selected{% endif %}>Neurology</option>
+                            <option value="ONCOLOGY" {% if object.specialization == 'ONCOLOGY' %}selected{% endif %}>Oncology</option>
+                            <option value="OPHTHALMOLOGY" {% if object.specialization == 'OPHTHALMOLOGY' %}selected{% endif %}>Ophthalmology</option>
+                            <option value="ORTHOPEDICS" {% if object.specialization == 'ORTHOPEDICS' %}selected{% endif %}>Orthopedics</option>
+                            <option value="PEDIATRICS" {% if object.specialization == 'PEDIATRICS' %}selected{% endif %}>Pediatrics</option>
+                            <option value="PSYCHIATRY" {% if object.specialization == 'PSYCHIATRY' %}selected{% endif %}>Psychiatry</option>
+                            <option value="RADIOLOGY" {% if object.specialization == 'RADIOLOGY' %}selected{% endif %}>Radiology</option>
+                            <option value="SURGERY" {% if object.specialization == 'SURGERY' %}selected{% endif %}>Surgery</option>
+                            <option value="UROLOGY" {% if object.specialization == 'UROLOGY' %}selected{% endif %}>Urology</option>
+                            <option value="OTHER" {% if object.specialization == 'OTHER' %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Qualification *</label>
+                            <input type="text" name="qualification" value="{{ object.qualification }}" placeholder="MBBS, MD Cardiology"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">License Number *</label>
+                            <input type="text" name="license_number" value="{{ object.license_number }}" placeholder="MH12345"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Experience (Years) *</label>
+                            <input type="number" name="experience_years" min="0" max="60" value="{{ object.experience_years }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Consultation Fee (₹) *</label>
+                            <input type="number" name="consultation_fee" min="0" step="0.01" value="{{ object.consultation_fee }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-phone text-green-600 mr-2"></i>Contact Information
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                        <input type="email" name="email" value="{{ object.email }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+                        <input type="tel" name="phone" value="{{ object.phone }}" placeholder="+919876543220"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clinic Information -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-clinic-medical text-green-600 mr-2"></i>Clinic Information
+                </h2>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Clinic Name</label>
+                        <input type="text" name="clinic_name" value="{{ object.clinic_name }}" placeholder="City Heart Hospital"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Clinic Address *</label>
+                        <textarea name="clinic_address" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">{{ object.clinic_address }}</textarea>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                            <input type="text" name="city" value="{{ object.city }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">State *</label>
+                            <input type="text" name="state" value="{{ object.state }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Postal Code *</label>
+                            <input type="text" name="postal_code" value="{{ object.postal_code }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                        <input type="text" name="country" value="{{ object.country }}" placeholder="India"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Availability -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-calendar-alt text-green-600 mr-2"></i>Availability
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Available Days *</label>
+                        <input type="text" name="available_days" value="{{ object.available_days }}" placeholder="Monday to Friday"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Available Time *</label>
+                        <input type="text" name="available_time" value="{{ object.available_time }}" placeholder="9:00 AM - 5:00 PM"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-info-circle text-green-600 mr-2"></i>Additional Information
+                </h2>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Biography</label>
+                        <textarea name="bio" rows="4" placeholder="Brief biography or professional summary" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">{{ object.bio }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Languages Spoken *</label>
+                        <input type="text" name="languages_spoken" value="{{ object.languages_spoken }}" placeholder="English, Hindi, Marathi"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600">
+                        <p class="text-gray-500 text-sm mt-1">Comma-separated list</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-4">
+                <button type="submit" class="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition">
+                    <i class="fas fa-save mr-2"></i>{% if object %}Update Doctor{% else %}Add Doctor{% endif %}
+                </button>
+                <a href="{% url 'doctor-list' %}" class="bg-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-400 transition">
+                    <i class="fas fa-times mr-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

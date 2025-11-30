@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Healthcare System{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">Dashboard</h1>
+    <p class="text-gray-600">Welcome, {{ user.name }}! Here's an overview of your healthcare system.</p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <!-- Total Patients Card -->
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Total Patients</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ total_patients }}</p>
+            </div>
+            <div class="bg-blue-100 p-4 rounded-full">
+                <i class="fas fa-users text-2xl text-blue-600"></i>
+            </div>
+        </div>
+        <p class="text-gray-500 text-sm mt-4">
+            <i class="fas fa-arrow-up text-green-600"></i> Active patients
+        </p>
+    </div>
+
+    <!-- Total Doctors Card -->
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Total Doctors</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ total_doctors }}</p>
+            </div>
+            <div class="bg-green-100 p-4 rounded-full">
+                <i class="fas fa-stethoscope text-2xl text-green-600"></i>
+            </div>
+        </div>
+        <p class="text-gray-500 text-sm mt-4">
+            <i class="fas fa-arrow-up text-green-600"></i> Available doctors
+        </p>
+    </div>
+
+    <!-- Total Mappings Card -->
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Assignments</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">{{ total_mappings }}</p>
+            </div>
+            <div class="bg-purple-100 p-4 rounded-full">
+                <i class="fas fa-link text-2xl text-purple-600"></i>
+            </div>
+        </div>
+        <p class="text-gray-500 text-sm mt-4">
+            <i class="fas fa-arrow-up text-green-600"></i> Active assignments
+        </p>
+    </div>
+
+    <!-- System Health Card -->
+    <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">System Status</p>
+                <p class="text-3xl font-bold text-green-600 mt-2">Online</p>
+            </div>
+            <div class="bg-green-100 p-4 rounded-full">
+                <i class="fas fa-check-circle text-2xl text-green-600"></i>
+            </div>
+        </div>
+        <p class="text-gray-500 text-sm mt-4">
+            All systems operational
+        </p>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <!-- Quick Actions Card -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+            <i class="fas fa-bolt text-yellow-500 mr-2"></i>Quick Actions
+        </h2>
+        <div class="space-y-3">
+            <a href="{% url 'patient-create' %}" class="block p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition text-gray-700">
+                <i class="fas fa-plus text-blue-600 mr-2"></i>Add New Patient
+            </a>
+            <a href="{% url 'doctor-create' %}" class="block p-3 bg-green-50 rounded-lg hover:bg-green-100 transition text-gray-700">
+                <i class="fas fa-plus text-green-600 mr-2"></i>Add New Doctor
+            </a>
+            <a href="{% url 'mapping-create' %}" class="block p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition text-gray-700">
+                <i class="fas fa-plus text-purple-600 mr-2"></i>Create Assignment
+            </a>
+        </div>
+    </div>
+
+    <!-- Recent Activity Card -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">
+            <i class="fas fa-history text-blue-500 mr-2"></i>Recent Activity
+        </h2>
+        <div class="space-y-3 text-sm">
+            <div class="flex items-center text-gray-600 pb-3 border-b">
+                <i class="fas fa-circle text-green-500 mr-2"></i>
+                <span>New patient registered</span>
+                <span class="ml-auto text-gray-400">2 hours ago</span>
+            </div>
+            <div class="flex items-center text-gray-600 pb-3 border-b">
+                <i class="fas fa-circle text-blue-500 mr-2"></i>
+                <span>Doctor assigned to patient</span>
+                <span class="ml-auto text-gray-400">4 hours ago</span>
+            </div>
+            <div class="flex items-center text-gray-600">
+                <i class="fas fa-circle text-purple-500 mr-2"></i>
+                <span>System update completed</span>
+                <span class="ml-auto text-gray-400">1 day ago</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Informational Section -->
+<div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg shadow-md p-8 text-white">
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-2xl font-bold mb-2">
+                <i class="fas fa-lightbulb mr-2"></i>Getting Started
+            </h2>
+            <p class="mb-4">Start by adding patients and doctors to your system, then create assignments to match them.</p>
+            <div class="flex space-x-3">
+                <a href="{% url 'patient-list' %}" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+                    View Patients
+                </a>
+                <a href="{% url 'doctor-list' %}" class="bg-blue-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-900 transition">
+                    View Doctors
+                </a>
+            </div>
+        </div>
+        <div class="hidden md:block text-6xl opacity-20">
+            <i class="fas fa-hospital"></i>
+        </div>
+    </div>
+</div>
+{% endblock %}

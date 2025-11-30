@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Edit Patient{% else %}Add Patient{% endif %} - Healthcare System{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">
+        {% if object %}Edit Patient{{ object.full_name }}{% else %}Add New Patient{% endif %}
+    </h1>
+    <p class="text-gray-600">{% if object %}Update patient information{% else %}Add a new patient to the system{% endif %}</p>
+</div>
+
+<div class="max-w-4xl">
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <form method="POST" class="space-y-6" novalidate>
+            {% csrf_token %}
+
+            <!-- Personal Information Section -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-user text-blue-600 mr-2"></i>Personal Information
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- First Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                        <input type="text" name="first_name" value="{{ object.first_name }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        {% if form.first_name.errors %}<p class="text-red-600 text-sm mt-1">{{ form.first_name.errors.0 }}</p>{% endif %}
+                    </div>
+
+                    <!-- Last Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                        <input type="text" name="last_name" value="{{ object.last_name }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        {% if form.last_name.errors %}<p class="text-red-600 text-sm mt-1">{{ form.last_name.errors.0 }}</p>{% endif %}
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth *</label>
+                        <input type="date" name="date_of_birth" value="{{ object.date_of_birth }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        {% if form.date_of_birth.errors %}<p class="text-red-600 text-sm mt-1">{{ form.date_of_birth.errors.0 }}</p>{% endif %}
+                    </div>
+
+                    <!-- Gender -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Gender *</label>
+                        <select name="gender" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                            <option value="">Select Gender</option>
+                            <option value="M" {% if object.gender == 'M' %}selected{% endif %}>Male</option>
+                            <option value="F" {% if object.gender == 'F' %}selected{% endif %}>Female</option>
+                            <option value="O" {% if object.gender == 'O' %}selected{% endif %}>Other</option>
+                        </select>
+                        {% if form.gender.errors %}<p class="text-red-600 text-sm mt-1">{{ form.gender.errors.0 }}</p>{% endif %}
+                    </div>
+
+                    <!-- Blood Group -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Blood Group</label>
+                        <select name="blood_group" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+" {% if object.blood_group == 'A+' %}selected{% endif %}>A+</option>
+                            <option value="A-" {% if object.blood_group == 'A-' %}selected{% endif %}>A-</option>
+                            <option value="B+" {% if object.blood_group == 'B+' %}selected{% endif %}>B+</option>
+                            <option value="B-" {% if object.blood_group == 'B-' %}selected{% endif %}>B-</option>
+                            <option value="AB+" {% if object.blood_group == 'AB+' %}selected{% endif %}>AB+</option>
+                            <option value="AB-" {% if object.blood_group == 'AB-' %}selected{% endif %}>AB-</option>
+                            <option value="O+" {% if object.blood_group == 'O+' %}selected{% endif %}>O+</option>
+                            <option value="O-" {% if object.blood_group == 'O-' %}selected{% endif %}>O-</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-phone text-blue-600 mr-2"></i>Contact Information
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Email -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" name="email" value="{{ object.email }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="patient@example.com">
+                    </div>
+
+                    <!-- Phone -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+                        <input type="tel" name="phone" value="{{ object.phone }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="+919876543210">
+                        {% if form.phone.errors %}<p class="text-red-600 text-sm mt-1">{{ form.phone.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address Section -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>Address
+                </h2>
+                <div class="space-y-6">
+                    <!-- Address -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Address *</label>
+                        <textarea name="address" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="Street address">{{ object.address }}</textarea>
+                    </div>
+
+                    <!-- City, State, Postal Code -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                            <input type="text" name="city" value="{{ object.city }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">State *</label>
+                            <input type="text" name="state" value="{{ object.state }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Postal Code *</label>
+                            <input type="text" name="postal_code" value="{{ object.postal_code }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        </div>
+                    </div>
+
+                    <!-- Country -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
+                        <input type="text" name="country" value="{{ object.country }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="India">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Information Section -->
+            <div class="border-b pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-heartbeat text-blue-600 mr-2"></i>Medical Information
+                </h2>
+                <div class="space-y-6">
+                    <!-- Medical History -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Medical History</label>
+                        <textarea name="medical_history" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="Brief medical history">{{ object.medical_history }}</textarea>
+                    </div>
+
+                    <!-- Allergies -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Allergies</label>
+                        <textarea name="allergies" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="Known allergies">{{ object.allergies }}</textarea>
+                    </div>
+
+                    <!-- Current Medications -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Current Medications</label>
+                        <textarea name="current_medications" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="Current medications">{{ object.current_medications }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency Contact Section -->
+            <div class="pb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 mr-2"></i>Emergency Contact
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Emergency Contact Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Name *</label>
+                        <input type="text" name="emergency_contact_name" value="{{ object.emergency_contact_name }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    </div>
+
+                    <!-- Emergency Contact Relation -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Relation *</label>
+                        <input type="text" name="emergency_contact_relation" value="{{ object.emergency_contact_relation }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="e.g., Spouse, Parent, Sibling">
+                    </div>
+
+                    <!-- Emergency Contact Phone -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+                        <input type="tel" name="emergency_contact_phone" value="{{ object.emergency_contact_phone }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                            placeholder="+919876543211">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Errors -->
+            {% if form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    {% for error in form.non_field_errors %}
+                        <p><i class="fas fa-exclamation-circle mr-2"></i>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Buttons -->
+            <div class="flex gap-4">
+                <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition">
+                    <i class="fas fa-save mr-2"></i>{% if object %}Update Patient{% else %}Add Patient{% endif %}
+                </button>
+                <a href="{% url 'patient-list' %}" class="bg-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-400 transition">
+                    <i class="fas fa-times mr-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
