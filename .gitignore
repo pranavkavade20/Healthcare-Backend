@@ -141,7 +141,7 @@ env.bak/
 venv.bak/
 
 # Unwanted files
-adminPass.txt
+admin.txt
 
 # Spyder project settings
 .spyderproject
