@@ -1,8 +1,5 @@
 # Healthcare Backend System
-Dear Gungun and WhatBytes Team,
-  - I hope you are doing well.
-  - Please find attached my completed Django REST Framework backend assignment as part of the hiring process.  
- - I’ve implemented all the required features as mentioned in the assignment instructions.
+
 ## 📋 Table of Contents
 - [Project Structure](#project-structure)
 - [Installation](#installation)
@@ -10,6 +7,7 @@ Dear Gungun and WhatBytes Team,
 - [Database Setup](#database-setup)
 - [Running the Application](#running-the-application)
 - [API Documentation](#api-documentation)
+- [Security Features](#security-features)
 
 
 ## 📁 Project Structure
